@@ -11,7 +11,9 @@ class SimpleCartService {
     create(cart) {
         return http.post("/shop/simple-cart", cart);
     }
-
+    remove(scno){
+        return http.delete(`/shop/simple-cart/deletion/${scno}`)
+    }
 }
 
 export default new SimpleCartService();

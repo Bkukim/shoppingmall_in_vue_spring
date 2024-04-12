@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * packageName : org.example.simpledms.service.shop.product
  * fileName : ProductService
@@ -35,5 +37,10 @@ public class ProductService {
     public Page<Product> findAll(String pname, Pageable pageable){
         Page<Product> page= productRepository.findAllByPnameContaining(pname, pageable);
         return page;
+    }
+
+    public Optional<Product> findById(int pno){
+        Optional<Product> product = productRepository.findById(pno);
+        return product;
     }
 }

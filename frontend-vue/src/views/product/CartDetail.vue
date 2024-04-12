@@ -1,6 +1,6 @@
 <template>
     <div class="mt-5">
-      <div v-if="simpleProduct" class="card mb-3">
+      <div v-if="product" class="card mb-3">
         <div class="row g-0">
           <div class="col-md-4">
             <img class="img-fluid rounded-start" alt="..." :src="product.image"/>
@@ -33,7 +33,7 @@
                   type="button"
                   class="btn btn-outline-dark"
                   disabled
-                >{{cartCount}}</button>
+                >{{amount}}</button>
   
                 <button
                   type="button"
@@ -70,30 +70,54 @@
     </div>
   </template>
 <script>
+import ProductService from '../../services/shop/product/PoductService'
+import CartService from '@/services/shop/product/CartService';
 export default {
     data() {
         return {
             product:{},
             message:"",
-            cartCount: 0,
+            amount: 0,
         }
     },
     methods: {
-        getProduct(){},
-        saveProduct(){},
+        async getProduct(pno){
+          try {
+            
+            let response = await ProductService.get(pno);
+            console.log(response.data);
+            this.product = response.data;
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        async saveProduct(){
+          try {
+            let data={
+              pno:this.product.pno,
+              amount: this.amount
+            }
+            let response = await CartService.save(data);
+            console.log(response.data);
+            this.message="저장이 완료되었습니다.";
+          } catch (error) {
+            console.log(error);
+            console.log(this.product)
+          }
+        },
         goCart(){},
         goOrder(){},
         increaseCount(){
-            this.cartCount++;
+            this.amount++;
         },
         decreaseCount(){
-            if (this.cartCount>0) {
-            this.cartCount--;   
+            if (this.amount>0) {
+            this.amount--;   
             }
         }
     },
     mounted() {
-        
+        this.getProduct(this.$route.params.pno);
     },
 }
 </script>

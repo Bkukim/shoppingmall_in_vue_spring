@@ -45,7 +45,7 @@
             </div>
 
             <div class="mt-3">
-              <button type="submit" class="btn btn-primary w-25" @click="saveSimpleProduct">
+              <button type="submit" class="btn btn-primary w-25" @click="saveSimpleCart">
                 장바구니에 추가
               </button>
 
@@ -97,7 +97,8 @@ export default {
     // TODO: 장바구니 담기(저장)
     async saveSimpleCart() {
       try {
-        // 임시 객체
+        if (this.cartCount > 0) {
+           // 임시 객체
         let data = {
           spno: this.simpleProduct.spno, // 상품번호
           cartCount: this.cartCount, // 장바구니 개수
@@ -110,6 +111,10 @@ export default {
         console.log(response.data);
         // 장바구니 담기 성공 메세지 출력
         this.message = "장바구니에 잘 담겼습니다.";
+        }else{
+          alert("상품 개수를 선택해주세요")
+        }
+       
       } catch (e) {
         console.log(e);
       }

@@ -8,7 +8,7 @@ class ProductService{
 
     // 상품 상세 조회
     get(pno){
-        return http.get(`/shop/cart/${pno}`);
+        return http.get(`/shop/product/${pno}`);
     }
 }
 

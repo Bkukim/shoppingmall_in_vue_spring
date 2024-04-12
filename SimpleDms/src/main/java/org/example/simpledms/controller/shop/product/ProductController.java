@@ -11,12 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * packageName : org.example.simpledms.controller.shop.product
@@ -31,7 +30,7 @@ import java.util.Map;
  * -----------------------------------------------------------
  * 2024-04-09         PC          최초 생성
  */
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/api/shop")
 public class ProductController {
@@ -67,4 +66,13 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/product/{pno}")
+    public ResponseEntity<Object> getProduct(@PathVariable int pno){
+        try {
+            Optional<Product> product = productService.findById(pno);
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

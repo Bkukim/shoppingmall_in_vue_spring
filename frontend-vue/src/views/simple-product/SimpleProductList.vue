@@ -78,7 +78,7 @@
   </div>
 </template>
 <script>
-import SimpleProductService from "@/services/shop/simple-product/SimpleCartService";
+import SimpleProductService from "@/services/shop/simple-product/SimpleProductService";
 export default {
   // TODO: 바인딩 속성(변수) 정의
   data() {
